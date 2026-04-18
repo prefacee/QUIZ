@@ -10,7 +10,7 @@
     <div class="container" id="app">
         <div class="quiz-header player-header">
             <div class="header-icon">🎯</div>
-            <h1>Quiz Challenge 2026</h1>
+            <h1>Quiz Challenge</h1>
             <p>15 Questions | 30 Sec Each</p>
         </div>
 
@@ -46,9 +46,10 @@
                 <div id="questionImageContainer" style="text-align: center;"></div>
             </div>
             <div class="options" id="optionsContainer"></div>
-            <div class="score-preview">
-                ⭐ Current Score: <span id="currentScore">0</span> / 15
-            </div>
+            <!-- Score display removed during quiz as requested -->
+                <div class="score-preview" style="display: none;">
+                    ⭐ Current Score: <span id="currentScore">0</span> / 15
+                </div>
         </div>
 
         <!-- Completion Section -->
@@ -56,8 +57,6 @@
             <div class="completion-card">
                 <div class="completion-emoji">🎉</div>
                 <h2>Quiz Completed!</h2>
-                <div class="final-score" id="finalScore">Your Score: 0/15</div>
-                <div class="final-time" id="finalTime">Time: 0 seconds</div>
                 <button id="playAgainBtn" class="btn-playagain">🔄 Play Again</button>
             </div>
         </div>

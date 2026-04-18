@@ -47,7 +47,7 @@ const ALL_15_QUESTIONS = [
     
     // Spelling Guessing (2 questions)
     { 
-        text: "Which is the CORRECT spelling of the word", 
+        text: "Which is the CORRECT spelling ?", 
         options: ["Bureaucracy", "Buraeucracy", "Bureuacracy", "Buroaucracy"], 
         correct: 0 
     },
@@ -78,12 +78,12 @@ const ALL_15_QUESTIONS = [
         text: "Which one is the CORRECT Instagram logo among these four?",
         image: "instalogo.png",
         options: ["1st Logo", "2nd Logo", "3rd Logo", "4th Logo"], 
-        correct: 4  
+        correct: 1
     },
     { 
         text: "Look at the half-revealed logo. Which brand does this belong to?",
         image: "logoguess.png",
-        options: ["McDonald's", "Burger King", "KFC", "Wendy's"], 
+        options: ["McDonald's", "Burger King", "Five Guys", "Wendy's"], 
         correct: 1 
     }
 ];
@@ -204,7 +204,7 @@ if (document.body.classList.contains('host-view')) {
     
     if (shareBtn) {
         shareBtn.addEventListener("click", () => {
-            const playerUrl = `${window.location.origin}${window.location.pathname.replace("index.html", "player.html")}`;
+            const playerUrl = 'https://prefacee.github.io/QUIZ/player.html';
             document.getElementById("playerUrlBox").innerHTML = playerUrl;
             modal.classList.remove("hidden");
         });
@@ -221,11 +221,13 @@ if (document.body.classList.contains('host-view')) {
         });
     });
     
-    // QR Code functionality
-    const showQRBtn = document.getElementById('showQRBtn');
-    const qrModal = document.getElementById('qrModal');
-    const closeQR = document.querySelector('.close-qr');
-    const playerUrl = `${window.location.origin}${window.location.pathname.replace('index.html', 'player.html')}`;
+   // QR Code functionality
+        const showQRBtn = document.getElementById('showQRBtn');
+        const qrModal = document.getElementById('qrModal');
+        const closeQR = document.querySelector('.close-qr');
+        // --- CHANGE START ---
+        const playerUrl = 'https://prefacee.github.io/QUIZ/player.html';
+        // --- CHANGE END ---
     
     if (showQRBtn) {
         showQRBtn.addEventListener('click', () => {
