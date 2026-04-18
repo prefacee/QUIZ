@@ -23,11 +23,11 @@
             </div>
             <div class="input-group">
                 <label>🎭 Your Name</label>
-                <input type="text" id="playerName" placeholder="e.g., Alex, Maria, James..." maxlength="30">
+                <input type="text" id="playerName" placeholder="Enter your name" maxlength="30">
             </div>
             <button id="startQuizBtn" class="btn-start">🚀 Start Quiz!</button>
             <div class="info-note">
-                💡 Tip: 30 seconds per question. Answer fast for better rank!
+                💡 30 seconds per question. Answer fast for better rank!
             </div>
         </div>
 
@@ -46,17 +46,14 @@
                 <div id="questionImageContainer" style="text-align: center;"></div>
             </div>
             <div class="options" id="optionsContainer"></div>
-            <!-- Score display removed during quiz as requested -->
-                <div class="score-preview" style="display: none;">
-                    ⭐ Current Score: <span id="currentScore">0</span> / 15
-                </div>
         </div>
 
-        <!-- Completion Section -->
+        <!-- Completion Section - Simple, no score/time -->
         <div id="completionSection" class="section hidden">
             <div class="completion-card">
                 <div class="completion-emoji">🎉</div>
                 <h2>Quiz Completed!</h2>
+                <p>Thank you for playing!</p>
                 <button id="playAgainBtn" class="btn-playagain">🔄 Play Again</button>
             </div>
         </div>

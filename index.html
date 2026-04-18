@@ -44,13 +44,15 @@
                     <thead>
                         <tr><th>🏅 Rank</th><th>👤 Player Name</th><th>⭐ Score</th><th>⏱️ Time (sec)</th><th>🏆 Badge</th></tr>
                     </thead>
-                    <tbody id="leaderboardBody"></tbody>
+                    <tbody id="leaderboardBody">
+                        <tr><td colspan="5" style="text-align:center;">🔄 Loading leaderboard......</td></tr>
+                    </tbody>
                 </table>
             </div>
 
             <div class="action-buttons">
                 <button id="refreshBtn" class="btn-primary">🔄 Refresh Leaderboard</button>
-                <button id="resetAllBtn" class="btn-danger">🗑️ Reset All Data</button>
+                <button id="resetDatabaseBtn" class="btn-danger">🗑️ Reset Entire Database</button>
                 <button id="shareCodeBtn" class="btn-secondary">📱 Show Player Code</button>
                 <button id="showQRBtn" class="btn-secondary">📱 Show QR Code</button>
             </div>
@@ -62,7 +64,6 @@
                     <p>Players should open this link on their devices:</p>
                     <div class="player-url-box" id="playerUrlBox"></div>
                     <button id="copyUrlBtn" class="btn-copy">📋 Copy Link</button>
-                    <p class="modal-note">⚠️ Players will ONLY see the quiz, NOT the leaderboard!</p>
                 </div>
             </div>
 
@@ -71,8 +72,7 @@
                     <span class="close-qr">&times;</span>
                     <h3>📲 Scan to Play</h3>
                     <div id="qrCodeContainer" style="display: flex; justify-content: center; margin: 20px 0;"></div>
-                    <p style="text-align: center;">Scan with phone camera to open quiz</p>
-                    <button id="copyPlayerLinkBtn" class="btn-copy">📋 Copy Player Link</button>
+                    <button id="copyPlayerLinkBtn" class="btn-copy">📋 Copy Link</button>
                 </div>
             </div>
         </div>
