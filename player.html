@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>🎯 Quiz Challenge - Player Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="player-view">
+    <div class="container" id="app">
+        <div class="quiz-header player-header">
+            <div class="header-icon">🎯</div>
+            <h1>Quiz Challenge 2026</h1>
+            <p>15 Questions | 30 Sec Each</p>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="registerSection" class="section">
+            <div class="welcome-card">
+                <span class="welcome-emoji">👋</span>
+                <h2>Ready to Play?</h2>
+                <p>Enter your name and test your knowledge!</p>
+            </div>
+            <div class="input-group">
+                <label>🎭 Your Name</label>
+                <input type="text" id="playerName" placeholder="e.g., Alex, Maria, James..." maxlength="30">
+            </div>
+            <button id="startQuizBtn" class="btn-start">🚀 Start Quiz!</button>
+            <div class="info-note">
+                💡 Tip: 30 seconds per question. Answer fast for better rank!
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quizSection" class="section hidden">
+            <div class="timer-card">
+                <div class="timer-label">⏱️ TIME LEFT</div>
+                <div class="timer-value" id="timer">30</div>
+                <div class="timer-bar">
+                    <div class="timer-progress" id="timerProgress" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="question-card">
+                <div class="question-number" id="progressIndicator">Question 1 / 15</div>
+                <div class="question-text" id="questionText">Loading...</div>
+                <div id="questionImageContainer" style="text-align: center;"></div>
+            </div>
+            <div class="options" id="optionsContainer"></div>
+            <div class="score-preview">
+                ⭐ Current Score: <span id="currentScore">0</span> / 15
+            </div>
+        </div>
+
+        <!-- Completion Section -->
+        <div id="completionSection" class="section hidden">
+            <div class="completion-card">
+                <div class="completion-emoji">🎉</div>
+                <h2>Quiz Completed!</h2>
+                <div class="final-score" id="finalScore">Your Score: 0/15</div>
+                <div class="final-time" id="finalTime">Time: 0 seconds</div>
+                <button id="playAgainBtn" class="btn-playagain">🔄 Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

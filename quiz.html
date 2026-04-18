@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Office Quiz Challenge 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .quiz-header {
+            background: linear-gradient(120deg, #1e293b, #0f172a);
+            color: white;
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .quiz-header h1 {
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+
+        .quiz-header p {
+            opacity: 0.9;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 28px 24px;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #1e293b;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 60px;
+            border: 2px solid #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+        }
+
+        button {
+            background: linear-gradient(120deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        /* Quiz Area */
+        .timer {
+            background: #ffedd5;
+            padding: 14px;
+            text-align: center;
+            border-radius: 60px;
+            margin-bottom: 24px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            font-family: monospace;
+            color: #b45309;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.3;
+            color: #0f172a;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .option {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .option:hover {
+            background: #eef2ff;
+            border-color: #667eea;
+            transform: translateX(4px);
+        }
+
+        .option.selected {
+            background: linear-gradient(120deg, #667eea, #764ba2);
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .progress {
+            font-size: 0.85rem;
+            color: #475569;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        /* Leaderboard */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .leaderboard-table th {
+            background: #f1f5f9;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .rank-1 {
+            background: linear-gradient(90deg, #fef3c7, #fffbeb);
+            font-weight: 800;
+        }
+
+        /* Utility */
+        .hidden {
+            display: none;
+        }
+
+        .flex-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            background: #475569;
+            box-shadow: none;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 550px) {
+            body {
+                padding: 12px;
+            }
+            .section {
+                padding: 20px 16px;
+            }
+            .question-text {
+                font-size: 1.2rem;
+            }
+            .option {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            .quiz-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="quiz-header">
+        <h1>📋 Quiz Challenge 2026</h1>
+        <p>15 Questions | 30 Sec Each | Global Leaderboard</p>
+    </div>
+
+    <!-- Registration Section -->
+    <div id="registerSection" class="section">
+        <div class="input-group">
+            <label>👤 Enter your name to start</label>
+            <input type="text" id="playerName" placeholder="e.g., Bikash, Shova, Rajesh..." maxlength="30">
+        </div>
+        <button id="startQuizBtn">🚀 Start Quiz</button>
+        <div style="margin-top: 20px; text-align: center;">
+            <button id="viewLeaderboardBtn" style="background: #334155;">🏆 View Leaderboard</button>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizSection" class="section hidden">
+        <div class="timer">⏱️ <span id="timer">30</span> sec</div>
+        <div class="question-text" id="questionText">Loading...</div>
+        <div class="options" id="optionsContainer"></div>
+        <div class="progress" id="progressIndicator">Question 1 / 15</div>
+    </div>
+
+    <!-- Leaderboard Section -->
+    <div id="leaderboardSection" class="section hidden">
+        <h2 style="margin-bottom: 20px;">🏅 Top Performers</h2>
+        <div style="overflow-x: auto;">
+            <table class="leaderboard-table" id="leaderboardTable">
+                <thead>
+                    <tr><th>Rank</th><th>Name</th><th>Score</th><th>Time (sec)</th></tr>
+                </thead>
+                <tbody id="leaderboardBody"></tbody>
+            </table>
+        </div>
+        <div class="flex-btns" style="margin-top: 24px;">
+            <button id="backToRegisterBtn" class="btn-secondary">◀ Back</button>
+            <button id="resetLeaderboardBtn" style="background: #dc2626;">🗑️ Reset All Data</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- QUESTIONS DATA (as provided) ----------
+    const FULL_QUESTIONS = [
+        { text: "Which tech giant recently refined its logo in late 2025 by making the 'smile' arrow more prominent and changing its signature color to 'Smile Orange'?", options: ["Alibaba", "Amazon", "eBay", "FedEx"], correct: 1 },
+        { text: "As of March 2026, who is the newly appointed Prime Minister of Nepal following the historic 'Gen-Z movement' and snap elections?", options: ["K.P. Sharma Oli", "Pushpa Kamal Dahal", "Balen Shah", "Gagan Thapa"], correct: 2 },
+        { text: "The logo of the World Wildlife Fund (WWF) features which endangered animal?", options: ["Red Panda", "Snow Leopard", "Giant Panda", "Bengal Tiger"], correct: 2 },
+        { text: "Which social media platform famously replaced its iconic blue bird logo with a minimalist 'X'?", options: ["Meta", "X (formerly Twitter)", "LinkedIn", "Threads"], correct: 1 },
+        { text: "In the 2026 Nepal government formation, which political party secured a historic majority, marking the first time a single party has done so since 1999?", options: ["Nepali Congress", "CPN (UML)", "Rastriya Swatantra Party (RSP)", "CPN (Maoist Centre)"], correct: 2 },
+        { text: "The 'Tripadvisor' logo rebrand in 2025 focused on making their mascot more flexible and animated. What is the name of this mascot?", options: ["Hooty", "Olli", "Pip", "Sky"], correct: 1 },
+        { text: "Which technology company’s logo is designed to look simultaneously like a head, a heart, a location pin, and the letter ‘A’?", options: ["Adobe", "Airbnb", "Asana", "Atlassian"], correct: 1 },
+        { text: "Following the September 2025 protests in Nepal, who served as the interim Prime Minister to oversee the transition to the March 2026 elections?", options: ["Ram Chandra Paudel", "Sushila Karki", "Kulman Ghising", "Mahabir Pun"], correct: 1 },
+        { text: "In branding science, what is the term for the 'new blue' (a vivid, hyper-chroma hue) that became a dominant trend in tech logos in 2025?", options: ["Vantablack Blue", "YinMn Blue", "Electric Cobalt", "Cyber Cyan"], correct: 1 },
+        { text: "In late 2024, Nepal signed the 'Framework for Belt and Road Cooperation.' Which country is Nepal's primary partner in this specific infrastructure framework?", options: ["India", "USA", "China", "Japan"], correct: 2 },
+        { text: "The Wikipedia logo is a globe made of jigsaw pieces. On the top of the globe, there is a missing piece. Which of these is true about the characters printed on the pieces?", options: ["They are all Greek letters.", "They are characters from different writing systems representing the letter 'W' or 'Wi'.", "They are binary codes representing 'Knowledge'.", "They are the initials of the original founding editors."], correct: 1 },
+        { text: "Prime Minister Balen Shah’s 2026 cabinet is noted for being the youngest in Nepal's history. Approximately how many members of his 15-member cabinet are serving in a ministerial role for the very first time?", options: ["5", "8", "10", "13"], correct: 3 },
+        { text: "In 2025 logo design trends, the 'Cove' shape became popular. What does a 'Cove' look like in a logo?", options: ["A 3D isometric cube with one side missing.", "A concave, quartered-circle cutout often used at corner junctions.", "A gradient that fades from the center outward in a starburst pattern.", "A typeface where all the horizontal bars are removed."], correct: 1 }
+    ];
+
+    // We have 13 questions? Wait the user gave 13 full questions but mentioned 15. Let's add 2 more generic tech/brand questions to reach 15.
+    const EXTRA_QUESTIONS = [
+        { text: "Which company’s logo is known as the 'swoosh'?", options: ["Adidas", "Nike", "Puma", "Reebok"], correct: 1 },
+        { text: "The Google Chrome logo features how many colors in its central orb?", options: ["3", "4", "5", "6"], correct: 1 }
+    ];
+    const ALL_15_QUESTIONS = [...FULL_QUESTIONS, ...EXTRA_QUESTIONS]; // now total 15
+
+    // ---------- GLOBALS ----------
+    let currentQuestions = [];         // shuffled per player session
+    let currentIndex = 0;
+    let score = 0;
+    let answers = new Array(15).fill(null);
+    let quizStartTime = null;
+    let timerInterval = null;
+    let timeRemaining = 30;
+    let quizActive = false;
+    let playerNameSaved = "";
+
+    // Leaderboard: [{ name, score, totalTimeSeconds }]
+    let leaderboard = [];
+
+    // Load from localStorage
+    function loadLeaderboard() {
+        const stored = localStorage.getItem("quizLeaderboardV2");
+        if (stored) {
+            leaderboard = JSON.parse(stored);
+        } else {
+            leaderboard = [];
+        }
+        sortLeaderboard();
+    }
+
+    function saveLeaderboard() {
+        sortLeaderboard();
+        localStorage.setItem("quizLeaderboardV2", JSON.stringify(leaderboard));
+    }
+
+    function sortLeaderboard() {
+        leaderboard.sort((a, b) => {
+            if (a.score !== b.score) return b.score - a.score;
+            return a.totalTimeSeconds - b.totalTimeSeconds;
+        });
+    }
+
+    function addScoreToLeaderboard(name, finalScore, totalSecs) {
+        // Check if player already exists (update best attempt? but for simplicity we keep multiple entries or replace? Office quiz: keep latest attempt)
+        // But better: if same name exists, replace only if better score/faster time? For simplicity: add new entry (shows all attempts)
+        leaderboard.push({ name: name, score: finalScore, totalTimeSeconds: totalSecs });
+        saveLeaderboard();
+    }
+
+    // Shuffle array (Fisher-Yates)
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // Initialize new quiz session
+    function initQuizSession(player) {
+        // Shuffle questions for this player (random order)
+        currentQuestions = shuffleArray([...ALL_15_QUESTIONS]);
+        currentIndex = 0;
+        score = 0;
+        answers = new Array(15).fill(null);
+        quizStartTime = Date.now();
+        timeRemaining = 30;
+        quizActive = true;
+        playerNameSaved = player;
+        renderQuestion();
+        startTimer();
+    }
+
+    function renderQuestion() {
+        if (!quizActive || currentIndex >= 15) {
+            finishQuiz();
+            return;
+        }
+        const q = currentQuestions[currentIndex];
+        document.getElementById("questionText").innerHTML = q.text;
+        const container = document.getElementById("optionsContainer");
+        container.innerHTML = "";
+        q.options.forEach((opt, idx) => {
+            const optDiv = document.createElement("div");
+            optDiv.className = "option";
+            if (answers[currentIndex] === idx) optDiv.classList.add("selected");
+            optDiv.innerHTML = `${String.fromCharCode(65+idx)}. ${opt}`;
+            optDiv.onclick = () => selectAnswer(idx);
+            container.appendChild(optDiv);
+        });
+        document.getElementById("progressIndicator").innerHTML = `Question ${currentIndex+1} / 15`;
+        resetTimerForQuestion();
+    }
+
+    function selectAnswer(selectedIdx) {
+        if (!quizActive) return;
+        const currentQ = currentQuestions[currentIndex];
+        const isCorrect = (selectedIdx === currentQ.correct);
+        if (isCorrect) score++;
+        answers[currentIndex] = selectedIdx;
+        // Move to next question after a short delay for feedback
+        if (quizActive) {
+            if (timerInterval) clearInterval(timerInterval);
+            currentIndex++;
+            if (currentIndex < 15) {
+                timeRemaining = 30;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+    }
+
+    function resetTimerForQuestion() {
+        if (timerInterval) clearInterval(timerInterval);
+        timeRemaining = 30;
+        document.getElementById("timer").innerText = timeRemaining;
+        timerInterval = setInterval(() => {
+            if (!quizActive) return;
+            if (timeRemaining <= 1) {
+                // Time's up for this question - auto move to next with no answer (or wrong)
+                clearInterval(timerInterval);
+                if (quizActive) {
+                    // No answer selected, mark as wrong (no increment)
+                    answers[currentIndex] = null;
+                    currentIndex++;
+                    if (currentIndex < 15) {
+                        timeRemaining = 30;
+                        renderQuestion();
+                    } else {
+                        finishQuiz();
+                    }
+                }
+            } else {
+                timeRemaining--;
+                document.getElementById("timer").innerText = timeRemaining;
+            }
+        }, 1000);
+    }
+
+    function startTimer() {
+        resetTimerForQuestion();
+    }
+
+    function finishQuiz() {
+        if (timerInterval) clearInterval(timerInterval);
+        quizActive = false;
+        const totalTimeMs = Date.now() - quizStartTime;
+        const totalSeconds = Math.floor(totalTimeMs / 1000);
+        // Add to leaderboard
+        addScoreToLeaderboard(playerNameSaved, score, totalSeconds);
+        showToast(`✅ ${playerNameSaved}, you scored ${score}/15 in ${totalSeconds} sec!`);
+        // Show leaderboard after finish
+        displayLeaderboard();
+        document.getElementById("quizSection").classList.add("hidden");
+        document.getElementById("leaderboardSection").classList.remove("hidden");
+        document.getElementById("registerSection").classList.add("hidden");
+        renderLeaderboardTable();
+    }
+
+    function showToast(msg) {
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.innerText = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+
+    function displayLeaderboard() {
+        renderLeaderboardTable();
+    }
+
+    function renderLeaderboardTable() {
+        const tbody = document.getElementById("leaderboardBody");
+        tbody.innerHTML = "";
+        const sorted = [...leaderboard];
+        sorted.sort((a,b) => {
+            if (a.score !== b.score) return b.score - a.score;
+            return a.totalTimeSeconds - b.totalTimeSeconds;
+        });
+        sorted.forEach((entry, idx) => {
+            const row = tbody.insertRow();
+            if (idx === 0) row.className = "rank-1";
+            row.insertCell(0).innerText = idx+1;
+            row.insertCell(1).innerText = entry.name;
+            row.insertCell(2).innerText = `${entry.score}/15`;
+            row.insertCell(3).innerText = entry.totalTimeSeconds;
+        });
+    }
+
+    // Reset everything
+    function resetAllData() {
+        if (confirm("⚠️ This will delete ALL leaderboard data. Continue?")) {
+            leaderboard = [];
+            saveLeaderboard();
+            renderLeaderboardTable();
+            showToast("Leaderboard reset!");
+        }
+    }
+
+    // UI Navigation
+    document.getElementById("startQuizBtn").onclick = () => {
+        const nameInput = document.getElementById("playerName").value.trim();
+        if (nameInput === "") {
+            alert("Please enter your name to start the quiz!");
+            return;
+        }
+        if (nameInput.length > 30) {
+            alert("Name too long, max 30 chars");
+            return;
+        }
+        document.getElementById("registerSection").classList.add("hidden");
+        document.getElementById("quizSection").classList.remove("hidden");
+        document.getElementById("leaderboardSection").classList.add("hidden");
+        initQuizSession(nameInput);
+    };
+
+    document.getElementById("viewLeaderboardBtn").onclick = () => {
+        document.getElementById("registerSection").classList.add("hidden");
+        document.getElementById("quizSection").classList.add("hidden");
+        document.getElementById("leaderboardSection").classList.remove("hidden");
+        renderLeaderboardTable();
+    };
+
+    document.getElementById("backToRegisterBtn").onclick = () => {
+        document.getElementById("registerSection").classList.remove("hidden");
+        document.getElementById("quizSection").classList.add("hidden");
+        document.getElementById("leaderboardSection").classList.add("hidden");
+        if (timerInterval) clearInterval(timerInterval);
+        quizActive = false;
+    };
+
+    document.getElementById("resetLeaderboardBtn").onclick = resetAllData;
+
+    // Load leaderboard on startup
+    loadLeaderboard();
+    renderLeaderboardTable();
+</script>
+</body>
+</html>

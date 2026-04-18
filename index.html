@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>🎮 Quiz Master - Host Control Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="host-view">
+    <div class="container host-container">
+        <div class="quiz-header host-header">
+            <div class="header-icon">🎮</div>
+            <h1>Quiz Master Control</h1>
+            <p>Live Leaderboard | Real-time Updates</p>
+        </div>
+
+        <div class="section">
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <span class="stat-emoji">👥</span>
+                    <div>
+                        <div class="stat-label">Total Players</div>
+                        <div class="stat-value" id="totalPlayers">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-emoji">🏆</span>
+                    <div>
+                        <div class="stat-label">Top Score</div>
+                        <div class="stat-value" id="topScore">0/15</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-emoji">⚡</span>
+                    <div>
+                        <div class="stat-label">Fastest Time</div>
+                        <div class="stat-value" id="fastestTime">0s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="leaderboard-table" id="leaderboardTable">
+                    <thead>
+                        <tr><th>🏅 Rank</th><th>👤 Player Name</th><th>⭐ Score</th><th>⏱️ Time (sec)</th><th>🏆 Badge</th></tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+
+            <div class="action-buttons">
+                <button id="refreshBtn" class="btn-primary">🔄 Refresh Leaderboard</button>
+                <button id="resetAllBtn" class="btn-danger">🗑️ Reset All Data</button>
+                <button id="shareCodeBtn" class="btn-secondary">📱 Show Player Code</button>
+                <button id="showQRBtn" class="btn-secondary">📱 Show QR Code</button>
+            </div>
+
+            <div id="shareModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h3>📲 Share with Players</h3>
+                    <p>Players should open this link on their devices:</p>
+                    <div class="player-url-box" id="playerUrlBox"></div>
+                    <button id="copyUrlBtn" class="btn-copy">📋 Copy Link</button>
+                    <p class="modal-note">⚠️ Players will ONLY see the quiz, NOT the leaderboard!</p>
+                </div>
+            </div>
+
+            <div id="qrModal" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-qr">&times;</span>
+                    <h3>📲 Scan to Play</h3>
+                    <div id="qrCodeContainer" style="display: flex; justify-content: center; margin: 20px 0;"></div>
+                    <p style="text-align: center;">Scan with phone camera to open quiz</p>
+                    <button id="copyPlayerLinkBtn" class="btn-copy">📋 Copy Player Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
